@@ -1,0 +1,31 @@
+name: create-new-release
+description: "construct new version"
+author: "adiseshan"
+inputs:
+  INPUT_GITHUB_HOSTNAME:
+    description: "github hostname if ghe"
+    default: "github.com"
+    required: false
+  INPUT_GITHUB_TOKEN:
+    description: "Input github token"
+    required: true
+  INPUT_GIT_REF:
+    description: "Input git ref"
+    required: true
+  INPUT_TAG_NAME:
+    description: "Input tag name"
+    default: ""
+    required: false
+
+runs:
+  using: "composite"
+  steps:
+    - name: create new release
+      id: create-new-release
+      shell: bash
+      run: /bin/bash ${GITHUB_ACTION_PATH}/create-new-release.sh
+      env:
+        INPUT_GITHUB_TOKEN: ${{ inputs.INPUT_GITHUB_TOKEN }}
+        INPUT_GITHUB_HOSTNAME: ${{ inputs.INPUT_GITHUB_HOSTNAME }}
+        INPUT_GIT_REF: ${{ inputs.INPUT_GIT_REF }}
+        INPUT_TAG_NAME: ${{ inputs.INPUT_TAG_NAME }}
